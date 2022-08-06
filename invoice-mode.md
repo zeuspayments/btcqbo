@@ -61,7 +61,7 @@ You need API keys from Intuit to sync to Quickbooks Online.
 
 After entering your Intuit API keys into the plugin, you'll be automatically redirected to sync the plugin to QBO. (If you need to resync later without updating your API keys, from the plugin welcome screen, you can hit the button to sync QBO.) Follow the on-screen instructions to sync to Inuit; you'll need your QBO username and password. You can repeat this step at any time in the future if you become unsynced from Intuit for any reason.
 
-<h3>Syncing BTCPay</h3>
+<h3>Syncing ZEUSPay</h3>
 
 From the plugin welcome screen, hit the button to sync ZEUSPay. Click on the link provided to obtain a pairing code from your ZEUSPay instance. Then enter the pairing code in the plugin, and submit.
 
