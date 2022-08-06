@@ -31,10 +31,10 @@ def wipe(key):
 
 
 def login(cookies):
-    # checks if user is logged into BTCPay as admin
-    # checks by making get request on BTCPay protected resource
-    # if user user is logged in to BTCPay, returns None
-    # if user is not logged into BTCPay, returns BTCPay URL to log in
+    # checks if user is logged into ZEUSPay as admin
+    # checks by making get request on ZEUSPay protected resource
+    # if user user is logged in to ZEUSPay, returns None
+    # if user is not logged into ZEUSPay, returns ZEUSPay URL to log in
     url = urljoin(str(os.getenv('BTCPAY_HOST')), 'server/users')
     response = requests.get(url, cookies=cookies)
     try:

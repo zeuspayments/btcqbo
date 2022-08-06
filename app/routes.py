@@ -62,7 +62,7 @@ def qbologged():
 
 @app.route('/btcqbo/authbtc', methods=['GET', 'POST'])
 def authbtc():
-    # accepts BTCPay pairing code and calls pairing fn
+    # accepts ZEUSPay pairing code and calls pairing fn
     status = login(request.cookies)
     if status is not None:
         return redirect(status)
@@ -75,7 +75,7 @@ def authbtc():
         )
         save('btc_client', client)
         save('forward_url', form.forward_url.data)
-        flash('Pairing to BTCPay Successful')
+        flash('Pairing to ZEUSPay Successful')
         return render_template('index.html')
     return render_template(
         'authbtc.html',
@@ -126,7 +126,7 @@ def setmail():
 
 @app.route('/btcqbo/api/v1/payment', methods=['GET', 'POST'])
 def paymentapi():
-    # receives and processes invoice notifications from BTCPay
+    # receives and processes invoice notifications from ZEUSPay
     if not request.json:
         return "No JSON Data.", 200
     elif 'status' in request.json:
@@ -250,7 +250,7 @@ def verify():
         doc_number=str(data['orderId']),
         email=str(data['email'])
     )
-    # create BTCPay invoice from submitted form data
+    # create ZEUSPay invoice from submitted form data
     if customer is not None:
         btc_client = fetch('btc_client')
         inv_data = btc_client.create_invoice({

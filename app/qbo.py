@@ -19,42 +19,42 @@ def post_payment(doc_number="", amount=0, btcp_id=''):
     '''
     refresh_stored_tokens()
     qb = fetch('qbclient')
-    # check if BTCPay is already in QBO as a pmt method
+    # check if ZEUSPay is already in QBO as a pmt method
     pmt_method_list = PaymentMethod.filter(
-        Name="BTCPay",
+        Name="ZEUSPay",
         qb=qb
     )
     try:
-        # if BTCPay is already in QBO, set it as pmt method
+        # if ZEUSPay is already in QBO, set it as pmt method
         pmt_method = pmt_method_list[0]
     except IndexError:
-        # if BTCPay is not in QBO, create it as pmt method
+        # if ZEUSPay is not in QBO, create it as pmt method
         new_pmt_method = PaymentMethod()
-        new_pmt_method.Name = "BTCPay"
+        new_pmt_method.Name = "ZEUSPay"
         new_pmt_method.save(qb=qb)
-        # set newly created BTCPay pmt method as pmt method
+        # set newly created ZEUSPay pmt method as pmt method
         pmt_method_list = PaymentMethod.filter(
-            Name="BTCPay",
+            Name="ZEUSPay",
             qb=qb
         )
         pmt_method = pmt_method_list[0]
-    # check if QBO has asset acct for Bitcoin-BTCPay
+    # check if QBO has asset acct for Bitcoin-ZEUSPay
     deposit_acct_list = Account.filter(
-        Name="Bitcoin-BTCPay",
+        Name="Bitcoin-ZEUSPay",
         qb=qb
     )
     try:
-        # if Bitcoin-BTCPay is in QBO, set as deposit acct
+        # if Bitcoin-ZEUSPay is in QBO, set as deposit acct
         deposit_acct = deposit_acct_list[0]
     except IndexError:
-        # if Bitcoin-BTCPay is not in QBO, create it as deposit acct
+        # if Bitcoin-ZEUSPay is not in QBO, create it as deposit acct
         new_acct = Account()
-        new_acct.Name = "Bitcoin-BTCPay"
+        new_acct.Name = "Bitcoin-ZEUSPay"
         new_acct.AccountSubType = "OtherCurrentAssets"
         new_acct.save(qb=qb)
-        # set newly created Bitcoin-BTCPay acct as deposit acct
+        # set newly created Bitcoin-ZEUSPay acct as deposit acct
         deposit_acct_list = Account.filter(
-            Name="Bitcoin-BTCPay",
+            Name="Bitcoin-ZEUSPay",
             qb=qb
         )
         deposit_acct = deposit_acct_list[0]
@@ -69,7 +69,7 @@ def post_payment(doc_number="", amount=0, btcp_id=''):
     else:
         # convert invoice object to linked invoice object
         linked_invoice = invoice.to_linked_txn()
-        description = 'BTCPay: ' + btcp_id
+        description = 'ZEUSPay: ' + btcp_id
         payment_line = PaymentLine()
         payment_line.Amount = amount
         payment_line.Description = description
@@ -100,9 +100,9 @@ def post_deposit(amount, tax, btcp_id):
         tax = float(0)
     refresh_stored_tokens()
     qb = fetch('qbclient')
-    # check if BTCPay income  acct is already in QBO
+    # check if ZEUSPay income  acct is already in QBO
     income_acct_list = Account.filter(
-        Name="BTCPay Sales",
+        Name="ZEUSPay Sales",
         qb=qb
     )
     try:
@@ -111,18 +111,18 @@ def post_deposit(amount, tax, btcp_id):
     except IndexError:
         # if income acct is not in QBO, create it
         new_acct = Account()
-        new_acct.Name = "BTCPay Sales"
+        new_acct.Name = "ZEUSPay Sales"
         new_acct.AccountSubType = "OtherPrimaryIncome"
         new_acct.save(qb=qb)
         # set newly created acct as income acct
         income_acct_list = Account.filter(
-            Name="BTCPay Sales",
+            Name="ZEUSPay Sales",
             qb=qb
         )
         income_acct = income_acct_list[0]
-    # check if BTCPay Sales Tax acct is already in QBO
+    # check if ZEUSPay Sales Tax acct is already in QBO
     sales_tax_acct_list = Account.filter(
-        Name="Sales Tax from BTCPay",
+        Name="Sales Tax from ZEUSPay",
         qb=qb
     )
     try:
@@ -131,37 +131,37 @@ def post_deposit(amount, tax, btcp_id):
     except IndexError:
         # if sales tax acct is not in QBO, create it
         new_acct = Account()
-        new_acct.Name = "Sales Tax from BTCPay"
+        new_acct.Name = "Sales Tax from ZEUSPay"
         new_acct.AccountSubType = "OtherCurrentLiabilities"
         new_acct.save(qb=qb)
         # set newly created acct as sales tax account
         sales_tax_acct_list = Account.filter(
-            Name="Sales Tax from BTCPay",
+            Name="Sales Tax from ZEUSPay",
             qb=qb
         )
         sales_tax_acct = sales_tax_acct_list[0]
-    # check if QBO has asset acct for Bitcoin-BTCPay
+    # check if QBO has asset acct for Bitcoin-ZEUSPay
     deposit_acct_list = Account.filter(
-        Name="Bitcoin-BTCPay",
+        Name="Bitcoin-ZEUSPay",
         qb=qb
     )
     try:
-        # if Bitcoin-BTCPay is in QBO, set as deposit acct
+        # if Bitcoin-ZEUSPay is in QBO, set as deposit acct
         deposit_acct = deposit_acct_list[0]
     except IndexError:
-        # if Bitcoin-BTCPay is not in QBO, create it as deposit acct
+        # if Bitcoin-ZEUSPay is not in QBO, create it as deposit acct
         new_acct = Account()
-        new_acct.Name = "Bitcoin-BTCPay"
+        new_acct.Name = "Bitcoin-ZEUSPay"
         new_acct.AccountSubType = "OtherCurrentAssets"
         new_acct.save(qb=qb)
-    # set newly created Bitcoin-BTCPay acct as deposit acct
+    # set newly created Bitcoin-ZEUSPay acct as deposit acct
     deposit_acct_list = Account.filter(
-        Name="Bitcoin-BTCPay",
+        Name="Bitcoin-ZEUSPay",
         qb=qb
     )
     deposit_acct = deposit_acct_list[0]
     # create deposit
-    description = 'BTCPay: ' + btcp_id
+    description = 'ZEUSPay: ' + btcp_id
     income_acct_ref = Ref()
     income_acct_ref.value = income_acct.Id
     detail = DepositLineDetail()
